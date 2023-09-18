@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { 
   StyleSheet, 
   View, 
@@ -7,9 +8,21 @@ import {
   TouchableOpacity} from "react-native";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import Login from "../Login";
 
-export default function SignUp() {
+import { auth } from "../../services/firebaseConfig";
+import { sendPasswordResetEmail } from "firebase/auth";
+
+export default function ForgotPassword() {
+
+    const [email, setEmail] = useState("");
+
+    const forgotPassword = () => {
+      sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("An email was sent to " +email)
+        navigation.navigate("Login");
+      })
+    }
 
     const navigation = useNavigation();
 
@@ -28,10 +41,15 @@ export default function SignUp() {
         <View style={styles.containerInput}>
           <TextInput
             placeholder="Email"
-            style={styles.TextInput}/>
+            style={styles.TextInput}
+            onChangeText={setEmail}
+            />
         </View>
 
-        <TouchableOpacity style={styles.sendButton}>
+        <TouchableOpacity 
+        style={styles.sendButton}
+        onPress={forgotPassword}
+        >
           <Text style={styles.sendButtonText}>
             SEND
           </Text>

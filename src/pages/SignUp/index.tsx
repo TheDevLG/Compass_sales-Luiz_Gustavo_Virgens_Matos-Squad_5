@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
   StyleSheet, 
   View, 
@@ -9,7 +9,29 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import Login from "../Login";
 
+import { auth } from "../../services/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 export default function SignUp() {
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const signUpAuthentication = () => {
+     createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+     
+      const user = userCredential.user;
+      navigation.navigate("Login");
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+      });
+    }
+
 
     const navigation = useNavigation();
 
@@ -24,19 +46,25 @@ export default function SignUp() {
         <View style={styles.containerInput}>
           <TextInput
             placeholder="Name"
-            style={styles.TextInput}/>
+            style={styles.TextInput}
+            onChangeText={(text) => setName(text)}
+            />
         </View>
 
         <View style={styles.containerInput}>
           <TextInput
             placeholder="Email"
-            style={styles.TextInput}/>
+            style={styles.TextInput}
+            onChangeText={(text) => setEmail(text)}
+            />
         </View>
 
         <View style={styles.containerInput}>
           <TextInput
             placeholder="Password"
-            style={styles.TextInput}/>
+            style={styles.TextInput}
+            onChangeText={(text) => setPassword(text)}
+          />
         </View>
 
         <TouchableOpacity 
@@ -48,7 +76,10 @@ export default function SignUp() {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.signUpButton}>
+        <TouchableOpacity 
+        style={styles.signUpButton}
+        onPress={signUpAuthentication}
+        >
           <Text style={styles.signUpButtonText}>
             SIGN UP
           </Text>

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
+import Home from "../pages/Home";
 
 const stack = createNativeStackNavigator();
 
@@ -24,6 +25,11 @@ export default function Routes(){
             <stack.Screen
             name="ForgotPassword"
             component={ForgotPassword}
+            options={{headerShown: false}}
+            />
+            <stack.Screen
+            name="Home"
+            component={Home}
             options={{headerShown: false}}
             />
         </stack.Navigator>
