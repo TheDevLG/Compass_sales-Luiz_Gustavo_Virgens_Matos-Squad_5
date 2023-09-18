@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../services/firebaseConfig";
 import { sendPasswordResetEmail } from "firebase/auth";
 
+
 export default function ForgotPassword() {
 
     const [email, setEmail] = useState("");
@@ -22,6 +23,13 @@ export default function ForgotPassword() {
         alert("An email was sent to " +email)
         navigation.navigate("Login");
       })
+      .catch((error) => {
+        const errorCode = error.code;
+        
+        if (errorCode === "auth/invalid-email") {
+          alert("Invalid email address");
+        }
+          });
     }
 
     const navigation = useNavigation();

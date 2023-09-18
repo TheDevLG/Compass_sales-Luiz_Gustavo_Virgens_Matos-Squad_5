@@ -22,12 +22,18 @@ export default function Login() {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      setEmail("");
+      setPassword("");
       navigation.navigate("Home");
-    
   })
   .catch((error) => {
     const errorCode = error.code;
-    const errorMessage = error.message;
+
+    if (errorCode === "auth/wrong-password") {
+      alert("Wrong Password!");
+    }else if (errorCode === "auth/invalid-email") {
+      alert("Invalid email address");
+    }
       });
     }
   
@@ -46,6 +52,7 @@ export default function Login() {
             placeholder="Email"
             style={styles.TextInput}
             onChangeText={(text) => setEmail(text)}
+            value={email}
             />
         </View>
 
@@ -55,6 +62,7 @@ export default function Login() {
             style={styles.TextInput}
             secureTextEntry        
             onChangeText={(text) => setPassword(text)}
+            value={password}
             />
         </View>
 

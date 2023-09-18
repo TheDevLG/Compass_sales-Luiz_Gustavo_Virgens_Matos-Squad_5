@@ -23,12 +23,23 @@ export default function SignUp() {
       .then((userCredential) => {
      
       const user = userCredential.user;
+      setEmail("");
+      setPassword("");
+      setName("");
       navigation.navigate("Login");
     
   })
   .catch((error) => {
     const errorCode = error.code;
-    const errorMessage = error.message;
+
+    if (errorCode === "auth/invalid-email") {
+      alert("Invalid email address");
+    } else if (errorCode === "auth/invalid-password") {
+      alert("Weak password, minimum of 6 characters");
+    } else if (errorCode === "auth/email-already-in-use") {
+      alert("An account already exists with the email address provided");
+    }
+
       });
     }
 
@@ -63,6 +74,7 @@ export default function SignUp() {
           <TextInput
             placeholder="Password"
             style={styles.TextInput}
+            secureTextEntry
             onChangeText={(text) => setPassword(text)}
           />
         </View>

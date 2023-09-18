@@ -9,11 +9,9 @@ import { useNavigation } from "@react-navigation/native";
 
 import { auth } from "../../services/firebaseConfig";
 
-
 export default function Home() {
 
     function logOut(){
-    
     navigation.navigate("Login");
     }
 

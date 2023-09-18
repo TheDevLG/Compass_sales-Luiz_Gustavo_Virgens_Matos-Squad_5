@@ -8,7 +8,9 @@ import Home from "../pages/Home";
 const stack = createNativeStackNavigator();
 
 export default function Routes(){
+    
     return(
+
         <stack.Navigator>
             <stack.Screen
             name="SignUp"
@@ -32,6 +34,12 @@ export default function Routes(){
             component={Home}
             options={{headerShown: false}}
             />
+
+            
         </stack.Navigator>
+
+
+
+
     )
 }
